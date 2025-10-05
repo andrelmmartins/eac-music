@@ -4,6 +4,7 @@ const base = process.env.NEXT_PUBLIC_AIRTABLE_BASE;
 const personalToken = process.env.NEXT_PUBLIC_AIRTABLE_TOKEN;
 
 const api = axios.create({
+  baseURL: "https://api.airtable.com/v0",
   headers: {
     Authorization: `Bearer ${personalToken}`,
   },
@@ -32,12 +33,12 @@ export interface Table {
   views: View[];
 }
 
-interface ServicesResponse {
+interface TablesResponse {
   tables: Table[];
 }
 
-export const getServices = async () => {
-  return api.get<ServicesResponse>(`https://api.airtable.com/v0/meta/bases/${base}/tables`);
+export const getTables = async () => {
+  return api.get<TablesResponse>(`/meta/bases/${base}/tables`);
 };
 
 interface RecordFields {
@@ -60,12 +61,12 @@ interface RecordItem {
   fields: RecordFields;
 }
 
-interface MusicsResponse {
+interface RecordsResponse {
   records: RecordItem[];
 }
 
-export const getMusics = async (tableId: string) => {
-    return api.get<MusicsResponse>(`https://api.airtable.com/v0/${base}/${tableId}/`, {
+export const getTableRecords = async (tableId: string) => {
+    return api.get<RecordsResponse>(`/${base}/${tableId}/`, {
       params: {
         sort: [{ field: "name", direction: "asc" }],
       },
