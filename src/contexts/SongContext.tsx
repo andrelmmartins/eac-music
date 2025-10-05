@@ -24,7 +24,7 @@ export const SongProvider = ({ children }: { children: React.ReactNode }) => {
   async function getSongs(albumId: string) {
     try {
       setIsLoadingSongs(true);
-      const response = await getTableRecords(albumId, "name");
+      const response = await getTableRecords(albumId);
 
       const parsedSongs: Song[] = [];
       response.data.records.forEach((record) => {

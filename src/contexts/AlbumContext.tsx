@@ -22,7 +22,7 @@ export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
     async function getAlbums() {
         try {
             setIsLoadingAlbums(true);
-            const response = await getTableRecords(ALBUMS_TABLE_ID, "name");
+            const response = await getTableRecords(ALBUMS_TABLE_ID);
 
             const parsedAlbums: Album[] = [];
             response.data.records.forEach((record) => {
