@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-import { AlbumsProvider } from "@/contexts/AlbumsContext";
+import { AlbumProvider } from "@/contexts/AlbumContext";
 
 const font = Manrope({ subsets: ["latin"] });
 
@@ -18,9 +18,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={font.className}>
-        <AlbumsProvider>
+        <AlbumProvider>
           {children}
-        </AlbumsProvider>
+        </AlbumProvider>
       </body>
     </html>
   );
