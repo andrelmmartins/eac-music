@@ -1,12 +1,10 @@
+import { BASE, BASE_URL, PERSONAL_TOKEN } from "@/@types/constants";
 import axios from "axios";
 
-const base = process.env.NEXT_PUBLIC_AIRTABLE_BASE;
-const personalToken = process.env.NEXT_PUBLIC_AIRTABLE_TOKEN;
-
 const api = axios.create({
-  baseURL: "https://api.airtable.com/v0",
+  baseURL: BASE_URL,
   headers: {
-    Authorization: `Bearer ${personalToken}`,
+    Authorization: `Bearer ${PERSONAL_TOKEN}`,
   },
 });
 
@@ -38,27 +36,45 @@ interface TablesResponse {
 }
 
 export const getTables = async () => {
-  return api.get<TablesResponse>(`/meta/bases/${base}/tables`);
+  return api.get<TablesResponse>(`/meta/bases/${BASE}/tables`);
 };
 
-interface RecordFields {
+interface RecordAttachment {
+  id: string;
+  url: string;
+  filename: string;
+  size: number;
+  type: string;
+}
+
+
+export interface AlbumRecord {
+  id: string;
   name: string;
-  tone: string;
-  studio?: boolean;
-  caminho?: boolean;
-  src: {
-    id: string
-    url: string
-    filename: string
-    size: number,
-    type: string
-  }[]
+  banner: RecordAttachment[];
+  color: string;
+  tags: string[];
+}
+
+export const fieldsIsAlbum = (fields: any) : fields is AlbumRecord => {
+  return "id" in fields;
+}
+
+export interface SongRecord {
+  name: string;
+  src: RecordAttachment[]
+  tone: string; 
+  tags: string[];
+}
+
+export const fieldsIsSong = (fields: any) : fields is SongRecord => {
+  return "tone" in fields;
 }
 
 interface RecordItem {
   id: string;
   createdTime: string;
-  fields: RecordFields;
+  fields: AlbumRecord | SongRecord;
 }
 
 interface RecordsResponse {
@@ -66,10 +82,9 @@ interface RecordsResponse {
 }
 
 export const getTableRecords = async (tableId: string) => {
-    return api.get<RecordsResponse>(`/${base}/${tableId}/`, {
+    return api.get<RecordsResponse>(`/${BASE}/${tableId}/`, {
       params: {
         sort: [{ field: "name", direction: "asc" }],
       },
     });
   };
-

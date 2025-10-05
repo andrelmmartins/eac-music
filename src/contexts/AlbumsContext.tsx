@@ -1,7 +1,8 @@
 'use client'
 
+import { ALBUMS_TABLE_ID } from "@/@types/constants";
 import { Album } from "@/@types/interfaces";
-import { getTables } from "@/service/api";
+import { fieldsIsAlbum, getTableRecords } from "@/service/api";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface IContext {
@@ -21,11 +22,22 @@ export const AlbumsProvider = ({ children }: { children: React.ReactNode }) => {
     async function getAlbums() {
         try {
             setIsLoadingAlbums(true);
-            const response = await getTables();
-            setAlbums(response.data.tables.map((table) => ({
-                name: table.name,
-                songs: []
-            })));
+            const response = await getTableRecords(ALBUMS_TABLE_ID);
+
+            const parsedAlbums: Album[] = [];
+            response.data.records.forEach((record) => {
+                if (fieldsIsAlbum(record.fields)) {
+                    parsedAlbums.push({
+                        id: record.fields.id || "",
+                        name: record.fields.name || "",
+                        banner: record.fields.banner?.[0]?.url || "",
+                        color: record.fields.color || "",
+                        tags: record.fields.tags || []
+                    });
+                }
+            });
+
+            setAlbums(parsedAlbums);
         } catch (error) {
             console.error(error);
         } finally {

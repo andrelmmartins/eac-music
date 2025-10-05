@@ -2,9 +2,13 @@ export interface Song {
     tone: string;
     name: string;
     src: string;
+    tags: string[];
 }
 
 export interface Album {
+    id: string;
     name: string;
-    songs: Song[];
+    banner: string;
+    color: string;
+    tags: string[];
 }
