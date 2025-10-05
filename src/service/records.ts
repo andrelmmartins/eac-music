@@ -9,7 +9,7 @@ interface RecordAttachment {
   type: string;
 }
 
-export interface AlbumRecord {
+export interface AlbumFields {
   id: string;
   name: string;
   banner: RecordAttachment[];
@@ -17,26 +17,26 @@ export interface AlbumRecord {
   tags: string[];
 }
 
-export const fieldsIsAlbum = (fields: any): fields is AlbumRecord => {
+export const isAlbumFields = (fields: any): fields is AlbumFields => {
   return "id" in fields;
 };
 
-export interface SongRecord {
+export interface SongFields {
   name: string;
   src: RecordAttachment[];
   tone: string;
   tags: string[];
-  likes: number;
+  views: number;
 }
 
-export const fieldsIsSong = (fields: any): fields is SongRecord => {
+export const isSongFields = (fields: any): fields is SongFields => {
   return "tone" in fields;
 };
 
 interface RecordItem {
   id: string;
   createdTime: string;
-  fields: AlbumRecord | SongRecord;
+  fields: AlbumFields | SongFields;
 }
 
 interface RecordsResponse {
@@ -45,14 +45,10 @@ interface RecordsResponse {
 
 export const getTableRecords = async (
   tableId: string,
-  sortType: "name" | "likes"
 ) => {
-  const sortField = sortType === "name" ? "name" : "likes";
-  const sortDirection = sortType === "name" ? "asc" : "desc";
-
   return api.get<RecordsResponse>(`/${BASE}/${tableId}/`, {
     params: {
-      sort: [{ field: sortField, direction: sortDirection }],
+      sort: [{ field: "name", direction: "asc" }],
     },
   });
 };

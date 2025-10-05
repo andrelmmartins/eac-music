@@ -2,7 +2,7 @@
 
 import { ALBUMS_TABLE_ID } from "@/@types/constants";
 import { Album } from "@/@types/interfaces";
-import { fieldsIsAlbum, getTableRecords } from "@/service/records";
+import { isAlbumFields, getTableRecords } from "@/service/records";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface IContext {
@@ -26,7 +26,7 @@ export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
 
             const parsedAlbums: Album[] = [];
             response.data.records.forEach((record) => {
-                if (fieldsIsAlbum(record.fields)) {
+                if (isAlbumFields(record.fields)) {
                     parsedAlbums.push({
                         id: record.fields.id || "",
                         name: record.fields.name || "",
