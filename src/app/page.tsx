@@ -27,13 +27,11 @@ export default function Home() {
         </div>
       </section>
 
-      {albums.length > 0 && (
-        <AlbumSection
-          title="Todos os Álbuns"
-          albums={albums}
-          isLoading={isLoadingAlbums}
-        />
-      )}
+      <AlbumSection
+        title="Todos os Álbuns"
+        albums={albums}
+        isLoading={isLoadingAlbums}
+      />
     </div>
   );
 }

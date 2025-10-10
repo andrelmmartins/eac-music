@@ -54,6 +54,7 @@ const Sidebar = () => {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center space-x-4 px-4 py-2 rounded-lg transition-colors duration-200 group ${
                     isActive
                       ? 'text-white bg-spotify-green/20 border border-spotify-green/30'
@@ -99,6 +100,7 @@ const Sidebar = () => {
                 <li key={album.id}>
                   <Link
                     href={`/${album.id}`}
+                    onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center space-x-4 px-4 py-2 rounded-lg text-dark-200 hover:text-white hover:bg-dark-800 transition-colors duration-200 group"
                   >
                     <div className="w-8 h-8 bg-gradient-to-br from-dark-600 to-dark-700 rounded flex items-center justify-center flex-shrink-0">

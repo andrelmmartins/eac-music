@@ -97,9 +97,74 @@ const MusicPlayer = ({ currentSong, isPlaying, onPlayPause, onNext, onPrevious, 
         onCanPlay={handleCanPlay}
       />
       
-      <div className="sticky bottom-4 mx-6 z-50">
-        <div className="glass-effect rounded-2xl border border-spotify-green/20 p-4 shadow-2xl backdrop-blur-xl bg-dark-800/60">
-          <div className="flex items-center justify-between">
+      <div className="sticky bottom-4 mx-6 sm:mx-6 z-50">
+        <div className="glass-effect rounded-2xl border border-spotify-green/20 p-3 sm:p-4 shadow-2xl backdrop-blur-xl bg-dark-800/60 relative">
+          {/* Mobile Layout */}
+          <div className="sm:hidden">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex-1 min-w-0 pr-3">
+                <h3 className="text-white font-semibold text-sm break-words leading-tight">{currentSong.name}</h3>
+                <p className="text-dark-300 text-xs truncate">{currentSong.tone}</p>
+              </div>
+              <button
+                onClick={onClose}
+                className="p-1 text-dark-300 hover:text-white transition-colors flex-shrink-0"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            
+            <div className="flex items-center justify-center space-x-4 mb-3">
+              <button
+                onClick={onPrevious}
+                disabled={!currentSong}
+                className="p-2 text-dark-300 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <SkipBack className="w-4 h-4" />
+              </button>
+              
+              <button
+                onClick={onPlayPause}
+                disabled={!currentSong}
+                className="p-3 bg-white text-black rounded-full hover:scale-105 transition-transform disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100"
+              >
+                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+              </button>
+              
+              <button
+                onClick={onNext}
+                disabled={!currentSong}
+                className="p-2 text-dark-300 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <SkipForward className="w-4 h-4" />
+              </button>
+            </div>
+
+            {currentSong && (
+              <div className="flex items-center space-x-2">
+                <span className="text-xs text-dark-400 w-10 text-right font-mono">
+                  {formatTime(currentTime)}
+                </span>
+                <input
+                  type="range"
+                  min="0"
+                  max={duration || 0}
+                  value={currentTime}
+                  onChange={handleSeek}
+                  className="flex-1 h-1 bg-dark-600 rounded-lg appearance-none cursor-pointer slider"
+                  style={{
+                    '--progress': duration > 0 ? `${(currentTime / duration) * 100}%` : '0%'
+                  } as React.CSSProperties}
+                />
+                <span className="text-xs text-dark-400 w-10 font-mono">
+                  {formatTime(duration)}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Layout */}
+          <div className="hidden sm:flex items-center justify-between">
             <div className="flex items-center space-x-4 flex-1 min-w-0">
               <div className="w-12 h-12 bg-gradient-to-br from-spotify-green to-spotify-green-light rounded-xl flex items-center justify-center flex-shrink-0">
                 <Music className="w-6 h-6 text-white" />

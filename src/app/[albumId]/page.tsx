@@ -79,11 +79,11 @@ export default function AlbumPage() {
 
   return (
     <div className="min-h-screen">
-      <div className="sticky top-0 z-50 bg-dark-900/80 backdrop-blur-md border-b border-dark-700">
+      <div className="hidden lg:block sticky top-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-dark-700">
         <div className="px-8 py-4">
           <Link 
             href="/" 
-            className="inline-flex items-center space-x-2 text-white hover:text-spotify-green transition-colors"
+            className="inline-flex items-center space-x-2 text-white hover:text-spotify-green transition-colors p-2 -m-2 rounded-lg hover:bg-dark-800/50"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Voltar</span>
