@@ -24,10 +24,16 @@ const AlbumSection = ({ title, subtitle, albums, isLoading }: AlbumSectionProps)
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {Array.from({ length: 6 }).map((_, index) => (
             <div key={index} className="animate-pulse">
-              <div className="bg-dark-700 rounded-lg aspect-square mb-4"></div>
-              <div className="space-y-2">
-                <div className="h-4 bg-dark-700 rounded w-3/4"></div>
-                <div className="h-3 bg-dark-700 rounded w-1/2"></div>
+              <div className="group bg-dark-800/50 backdrop-blur-sm rounded-lg p-4">
+                <div className="relative mb-4">
+                  <div className="aspect-square rounded-lg overflow-hidden bg-dark-700 shadow-2xl"></div>
+                </div>
+                <div className="space-y-1">
+                  <div className="h-5 bg-dark-700 rounded w-3/4"></div>
+                  <div className="flex flex-wrap gap-1">
+                    <div className="h-6 bg-dark-700 rounded-full w-16"></div>
+                  </div>
+                </div>
               </div>
             </div>
           ))}

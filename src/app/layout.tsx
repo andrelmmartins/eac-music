@@ -9,7 +9,7 @@ const font = Urbanist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CristoSound",
-  description: "Sua plataforma de música cristã",
+  description: "Aqui você encontra algumas músicas gravadas em ensaios",
 };
 
 export default function RootLayout({

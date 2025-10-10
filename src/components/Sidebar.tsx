@@ -79,11 +79,17 @@ const Sidebar = () => {
             </h3>
           </div>
           
-          {isLoadingAlbums ? (
-            <div className="px-4 space-y-2">
+          {true ? (
+            <div className="px-4 space-y-1 w-full">
               {Array.from({ length: 3 }).map((_, index) => (
                 <div key={index} className="animate-pulse">
-                  <div className="h-8 bg-dark-700 rounded-lg"></div>
+                  <div className="flex items-center space-x-4 py-2 rounded-lg">
+                    <div className="w-8 h-8 bg-dark-700 rounded flex-shrink-0"></div>
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <div className="h-4 bg-dark-700 rounded w-3/4"></div>
+                      <div className="h-3 bg-dark-700 rounded w-1/2"></div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
