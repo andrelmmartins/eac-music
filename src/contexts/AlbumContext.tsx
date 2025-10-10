@@ -8,8 +8,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 interface IContext {
     albums: Album[];
     isLoadingAlbums: boolean;
-    selectedAlbum: Album | null;
-    setSelectedAlbum: (album: Album) => void;
 }
 
 export const AlbumContext = createContext({} as IContext);
@@ -17,7 +15,6 @@ export const AlbumContext = createContext({} as IContext);
 export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
     const [isLoadingAlbums, setIsLoadingAlbums] = useState(false);
     const [albums, setAlbums] = useState<Album[]>([]);
-    const [selectedAlbum, setSelectedAlbum] = useState<Album | null>(null);
 
     async function getAlbums() {
         try {
@@ -53,8 +50,6 @@ export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
         <AlbumContext.Provider value={{
             albums,
             isLoadingAlbums,
-            selectedAlbum,
-            setSelectedAlbum
         }}>
             {children}
         </AlbumContext.Provider>
