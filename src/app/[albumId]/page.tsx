@@ -170,6 +170,7 @@ export default function AlbumPage() {
         onPrevious={playPrevious}
         onSongSelect={handleSongSelect}
         onClose={handleClosePlayer}
+        albumColor={currentAlbum?.color}
       />
     </div>
   );

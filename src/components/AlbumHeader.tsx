@@ -20,6 +20,14 @@ const AlbumHeader = ({ album, onPlayAll }: AlbumHeaderProps) => {
         }}
       />
       
+      {/* Overlay com cor do álbum */}
+      <div 
+        className="absolute inset-0 opacity-20"
+        style={{
+          background: `linear-gradient(135deg, ${album.color || '#1db954'}20 0%, transparent 50%)`
+        }}
+      />
+      
       <div className="relative p-4 sm:p-6 lg:p-8">
         <div className="flex flex-col sm:flex-row sm:items-end space-y-6 sm:space-y-0 sm:space-x-8">
           <div className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 bg-gradient-to-br from-dark-600  to-dark-700 rounded-lg shadow-2xl flex-shrink-0 mx-auto sm:mx-0">
@@ -51,7 +59,11 @@ const AlbumHeader = ({ album, onPlayAll }: AlbumHeaderProps) => {
                   {album.tags.slice(0, 3).map((tag, index) => (
                     <span
                       key={index}
-                      className="px-2.5 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm bg-dark-700/50 text-white rounded-full border border-dark-600 whitespace-nowrap"
+                      className="px-2.5 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm text-white rounded-full border whitespace-nowrap"
+                      style={{
+                        backgroundColor: `${album.color || '#1db954'}20`,
+                        borderColor: `${album.color || '#1db954'}40`
+                      }}
                     >
                       {tag}
                     </span>
@@ -68,7 +80,17 @@ const AlbumHeader = ({ album, onPlayAll }: AlbumHeaderProps) => {
             <div className="flex items-center justify-center sm:justify-start space-x-4">
               <button
                 onClick={onPlayAll}
-                className="flex items-center space-x-2 bg-spotify-green text-black px-6 py-3 sm:px-8 sm:py-4 rounded-full font-semibold hover:bg-spotify-green-light transition-colors hover:scale-105 transform text-sm sm:text-base"
+                className="flex items-center space-x-2 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-full font-semibold transition-colors hover:scale-105 transform text-sm sm:text-base shadow-lg"
+                style={{
+                  backgroundColor: album.color || '#1db954',
+                  boxShadow: `0 4px 20px ${album.color || '#1db954'}40`
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.filter = 'brightness(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.filter = 'brightness(1)';
+                }}
               >
                 <Play className="w-4 h-4 fill-current" />
                 <span>Reproduzir</span>
