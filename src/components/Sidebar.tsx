@@ -79,7 +79,7 @@ const Sidebar = () => {
             </h3>
           </div>
           
-          {true ? (
+          {isLoadingAlbums ? (
             <div className="px-4 space-y-1 w-full">
               {Array.from({ length: 3 }).map((_, index) => (
                 <div key={index} className="animate-pulse">
