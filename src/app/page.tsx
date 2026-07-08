@@ -1,58 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getServices, Table } from '@/service/api'
-
-import { useRouter } from "next/navigation";
+import { useAlbum } from "@/contexts/AlbumContext";
+import AlbumSection from "@/components/AlbumSection";
+import { Music } from "lucide-react";
 
 export default function Home() {
-  const router = useRouter();
-  const [services, setServices] = useState<Table[]>([]);
-
-  async function handleServices() {
-    try {
-      const response = await getServices()
-      setServices(response.data.tables)
-    } catch {
-
-    }
-  }
-
-  useEffect(() => {
-    handleServices()
-  }, []);
+  const { albums, isLoadingAlbums } = useAlbum();
 
   return (
-    <>
-      <main className="min-h-screen flex  flex-col items-center gap-6 pt-12 p-6">
-        {/* <h1 className="font-bold text-3xl">
-          <span className="text-blue-dark">#</span>{service}
-        </h1> */}
-
-        {services.map((service, i) => {
-          return (
-            <div
-              className="bg-black text-white p-10 cursor-pointer"
-              key={`service-${i}`}
-              onClick={() => {
-                router.push(encodeURIComponent(service.name));
-              }}
-            >
-              {service.name}
+    <div className="p-4 lg:p-6 space-y-8 animate-fade-in">
+      <section className="relative">
+        <div className="bg-gradient-to-r from-spotify-green/20 to-primary-600/20 rounded-2xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm border border-dark-700">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4 lg:space-x-6">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br from-spotify-green to-spotify-green-light rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0">
+              <Music className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" />
             </div>
-          );
-        })}
-      </main>
+            <div className="text-center sm:text-left">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">
+                Bem-vindo ao SpotiCristo
+              </h1>
+              <p className="text-sm sm:text-base text-dark-300">
+                Aqui você encontra algumas músicas gravadas em ensaios.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <div className="h-[300px] pt-[100px] mt-[-100px] background w-full flex items-center justify-center mix-blend-multiply z-0">
-        <a
-          href="https://www.instagram.com/andrelmmartins/"
-          target="_blank"
-          className="flex items-center px-5 h-10 bg-black text-white font-bold rounded-full"
-        >
-          @andrelmmartins
-        </a>
-      </div>
-    </>
+      <AlbumSection
+        title="Todos os Álbuns"
+        albums={albums}
+        isLoading={isLoadingAlbums}
+      />
+    </div>
   );
 }

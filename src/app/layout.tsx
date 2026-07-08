@@ -1,12 +1,21 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import "./globals.css";
+import { AlbumProvider } from "@/contexts/AlbumContext";
+import { SongProvider } from "@/contexts/SongContext";
+import Sidebar from "@/components/Sidebar";
 
-const font = Manrope({ subsets: ["latin"] });
+const font = Urbanist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "SpotiCristo",
   description: "App para ouvir as gravadas para Cristo",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover" as const,
 };
 
 export default function RootLayout({
@@ -16,7 +25,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={font.className}>{children}</body>
+      <body className={font.className}>
+        <AlbumProvider>
+          <SongProvider>
+            <div className="flex min-h-dvh bg-dark-900">
+              <Sidebar />
+              
+              <div className="flex-1 flex flex-col overflow-hidden lg:ml-0 min-h-dvh">
+                <main className="flex-1 overflow-y-auto">
+                  {children}
+                </main>
+              </div>
+            </div>
+          </SongProvider>
+        </AlbumProvider>
+      </body>
     </html>
   );
 }
