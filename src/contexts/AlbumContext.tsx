@@ -13,7 +13,7 @@ interface IContext {
 export const AlbumContext = createContext({} as IContext);
 
 export const AlbumProvider = ({ children }: { children: React.ReactNode }) => {
-    const [isLoadingAlbums, setIsLoadingAlbums] = useState(false);
+    const [isLoadingAlbums, setIsLoadingAlbums] = useState(true);
     const [albums, setAlbums] = useState<Album[]>([]);
 
     async function getAlbums() {

@@ -97,7 +97,7 @@ const MusicPlayer = ({ currentSong, isPlaying, onPlayPause, onNext, onPrevious, 
         onCanPlay={handleCanPlay}
       />
       
-      <div className="sticky bottom-3 sm:bottom-4 mx-3 sm:mx-6 z-50">
+      <div className="z-50 max-sm:fixed max-sm:left-3 max-sm:right-3 max-sm:bottom-[max(0.75rem,env(safe-area-inset-bottom))] sm:sticky sm:bottom-4 sm:mx-6">
         <div className="glass-effect rounded-2xl border border-spotify-green/20 p-3 sm:p-4 shadow-2xl backdrop-blur-xl bg-dark-800/60 relative">
           {/* Mobile Layout */}
           <div className="sm:hidden">

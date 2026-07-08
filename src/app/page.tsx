@@ -17,7 +17,7 @@ export default function Home() {
             </div>
             <div className="text-center sm:text-left">
               <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">
-                Bem-vindo ao CristoSound
+                Bem-vindo ao SpotiCristo
               </h1>
               <p className="text-sm sm:text-base text-dark-300">
                 Aqui você encontra algumas músicas gravadas em ensaios.

@@ -33,7 +33,7 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div className={`
-        w-64 h-screen bg-dark-900 border-r border-dark-700 flex flex-col
+        w-64 min-h-dvh bg-dark-900 border-r border-dark-700 flex flex-col
         fixed lg:relative z-50 transform transition-transform duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
@@ -42,7 +42,7 @@ const Sidebar = () => {
           <div className="w-8 h-8 bg-gradient-to-br from-spotify-green to-spotify-green-light rounded-lg flex items-center justify-center">
             <Music className="w-4 h-4 text-white" />
           </div>
-          <span className="text-xl font-bold gradient-text">CristoSound</span>
+          <span className="text-xl font-bold gradient-text">SpotiCristo</span>
         </Link>
       </div>
 

@@ -59,7 +59,7 @@ const AlbumHeader = ({ album, onPlayAll }: AlbumHeaderProps) => {
                   {album.tags.slice(0, 3).map((tag, index) => (
                     <span
                       key={index}
-                      className="px-2.5 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm text-white rounded-full border whitespace-nowrap"
+                      className="px-2.5 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm text-white rounded-full border max-w-full truncate"
                       style={{
                         backgroundColor: `${album.color || '#1db954'}20`,
                         borderColor: `${album.color || '#1db954'}40`
@@ -69,7 +69,7 @@ const AlbumHeader = ({ album, onPlayAll }: AlbumHeaderProps) => {
                     </span>
                   ))}
                   {album.tags.length > 3 && (
-                    <span className="px-2.5 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm bg-dark-600/50 text-dark-300 rounded-full border border-dark-600 whitespace-nowrap">
+                    <span className="px-2.5 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm bg-dark-600/50 text-dark-300 rounded-full border border-dark-600">
                       +{album.tags.length - 3}
                     </span>
                   )}

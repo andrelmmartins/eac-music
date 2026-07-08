@@ -86,12 +86,12 @@ const SongList = ({ songs, currentSong, isPlaying, onSongSelect, onPlayPause }: 
                   <span className="text-dark-300 text-sm">{song.tone}</span>
                 </div>
 
-                <div className="col-span-2">
+                <div className="col-span-2 min-w-0">
                   <div className="flex flex-wrap gap-1">
                     {song.tags.slice(0, 2).map((tag, tagIndex) => (
                       <span
                         key={tagIndex}
-                        className="px-2 py-1 text-xs bg-dark-600 text-dark-200 rounded-full"
+                        className="px-2 py-1 text-xs bg-dark-600 text-dark-200 rounded-full max-w-full truncate"
                       >
                         {tag}
                       </span>
@@ -131,15 +131,15 @@ const SongList = ({ songs, currentSong, isPlaying, onSongSelect, onPlayPause }: 
                     }`}>
                       {song.name}
                     </h3>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <span className="text-dark-300 text-xs">{song.tone}</span>
+                    <div className="flex flex-wrap items-center gap-1 mt-1 min-w-0">
+                      <span className="text-dark-300 text-xs shrink-0">{song.tone}</span>
                       {song.tags.length > 0 && (
-                        <span className="text-dark-400 text-xs">•</span>
+                        <span className="text-dark-400 text-xs shrink-0">•</span>
                       )}
                       {song.tags.slice(0, 1).map((tag, tagIndex) => (
                         <span
                           key={tagIndex}
-                          className="px-2 py-0.5 text-xs bg-dark-600 text-dark-200 rounded-full"
+                          className="px-2 py-0.5 text-xs bg-dark-600 text-dark-200 rounded-full max-w-[8rem] truncate"
                         >
                           {tag}
                         </span>

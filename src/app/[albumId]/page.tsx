@@ -3,16 +3,18 @@
 import { useSong } from "@/contexts/SongContext";
 import { useAlbum } from "@/contexts/AlbumContext";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AlbumHeader from "@/components/AlbumHeader";
 import SongList from "@/components/SongList";
+import SongListSkeleton from "@/components/SongListSkeleton";
+import AlbumPageSkeleton from "@/components/AlbumPageSkeleton";
 import MusicPlayer from "@/components/MusicPlayer";
 import { ArrowLeft, Music } from "lucide-react";
 import Link from "next/link";
 
 export default function AlbumPage() {
   const { albumId } = useParams();
-  const { albums } = useAlbum();
+  const { albums, isLoadingAlbums } = useAlbum();
   const { 
     songs, 
     isLoadingSongs, 
@@ -25,15 +27,13 @@ export default function AlbumPage() {
     playPrevious 
   } = useSong();
 
-  const [currentAlbum, setCurrentAlbum] = useState<any>(null);
+  const currentAlbum = albums.find((album) => album.id === albumId);
 
   useEffect(() => {
     if (albumId) {
       getSongs(albumId as string);
-      const album = albums.find(album => album.id === albumId);
-      setCurrentAlbum(album);
     }
-  }, [albumId, albums]);
+  }, [albumId, getSongs]);
 
   const handlePlayAll = () => {
     if (songs.length > 0) {
@@ -55,6 +55,10 @@ export default function AlbumPage() {
     setCurrentSong(null);
     setIsPlaying(false);
   };
+
+  if (isLoadingAlbums) {
+    return <AlbumPageSkeleton />;
+  }
 
   if (!currentAlbum) {
     return (
@@ -78,7 +82,7 @@ export default function AlbumPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className={`min-h-screen ${currentSong ? "pb-36 sm:pb-28" : ""}`}>
       <div className="hidden lg:block sticky top-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-dark-700">
         <div className="px-8 py-4">
           <Link 
@@ -98,52 +102,7 @@ export default function AlbumPage() {
 
       <div className="px-4 lg:px-8 py-8">
         {isLoadingSongs ? (
-          <div className="bg-dark-800/50 backdrop-blur-sm rounded-lg border border-dark-700 overflow-hidden">
-            <div className="px-8 py-4 border-b border-dark-700">
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-1 flex justify-center">
-                  <div className="w-4 h-4 bg-dark-700 rounded animate-pulse"></div>
-                </div>
-                <div className="col-span-5">
-                  <div className="w-32 h-4 bg-dark-700 rounded animate-pulse"></div>
-                </div>
-                <div className="col-span-3">
-                  <div className="w-16 h-4 bg-dark-700 rounded animate-pulse"></div>
-                </div>
-                <div className="col-span-2">
-                  <div className="w-20 h-4 bg-dark-700 rounded animate-pulse"></div>
-                </div>
-                <div className="col-span-1 flex justify-center">
-                  <div className="w-4 h-4 bg-dark-700 rounded animate-pulse"></div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="divide-y divide-dark-700">
-              {Array.from({ length: 5 }).map((_, index) => (
-                <div key={index} className="px-8 py-4">
-                  <div className="grid grid-cols-12 gap-4 items-center">
-                    <div className="col-span-1 flex justify-center">
-                      <div className="w-4 h-4 bg-dark-700 rounded animate-pulse"></div>
-                    </div>
-                    <div className="col-span-5">
-                      <div className="w-48 h-4 bg-dark-700 rounded animate-pulse mb-2"></div>
-                      <div className="w-32 h-3 bg-dark-700 rounded animate-pulse"></div>
-                    </div>
-                    <div className="col-span-3">
-                      <div className="w-8 h-4 bg-dark-700 rounded animate-pulse"></div>
-                    </div>
-                    <div className="col-span-2">
-                      <div className="w-16 h-4 bg-dark-700 rounded animate-pulse"></div>
-                    </div>
-                    <div className="col-span-1 flex justify-center">
-                      <div className="w-8 h-4 bg-dark-700 rounded animate-pulse"></div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <SongListSkeleton />
         ) : songs.length > 0 ? (
           <SongList
             songs={songs}

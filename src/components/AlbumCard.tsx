@@ -50,11 +50,11 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
             {album.name}
           </h3>
           
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1 min-w-0">
             {album.tags.slice(0, 2).map((tag, index) => (
               <span
                 key={index}
-                className="px-2 py-1 text-xs bg-dark-600 text-dark-200 rounded-full"
+                className="px-2 py-1 text-xs bg-dark-600 text-dark-200 rounded-full max-w-full truncate"
               >
                 {tag}
               </span>
