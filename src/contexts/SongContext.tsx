@@ -2,7 +2,8 @@
 
 import { Song } from "@/@types/interfaces";
 import { getTableRecords, isSongFields } from "@/service/records";
-import { createContext, useContext, useCallback, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { createContext, useCallback, useContext, useState } from "react";
 
 interface IContext {
   songs: Song[];
@@ -19,43 +20,48 @@ interface IContext {
 
 export const SongContext = createContext({} as IContext);
 
+async function fetchSongs(albumId: string): Promise<Song[]> {
+  try {
+    const response = await getTableRecords(albumId);
+
+    const parsedSongs: Song[] = [];
+    response.data.records.forEach((record) => {
+      if (isSongFields(record.fields)) {
+        parsedSongs.push({
+          id: record.id || "",
+          tone: record.fields.tone || "",
+          name: record.fields.name || "",
+          src: record.fields.src?.[0]?.url || "",
+          tags: record.fields.tags || [],
+        });
+      }
+    });
+
+    return parsedSongs;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export const SongProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isLoadingSongs, setIsLoadingSongs] = useState(false);
-  const [songs, setSongs] = useState<Song[]>([]);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAlbumId, setCurrentAlbumId] = useState<string | null>(null);
 
-  const getSongs = useCallback(async (albumId: string) => {
-    try {
-      setIsLoadingSongs(true);
-      setCurrentAlbumId(albumId);
-      const response = await getTableRecords(albumId);
+  const { data: songs = [], isLoading: isLoadingSongs } = useQuery({
+    queryKey: ["songs", currentAlbumId],
+    queryFn: () => fetchSongs(currentAlbumId!),
+    enabled: !!currentAlbumId,
+  });
 
-      const parsedSongs: Song[] = [];
-      response.data.records.forEach((record) => {
-        if (isSongFields(record.fields)) {
-          parsedSongs.push({
-            id: record.id || "",
-            tone: record.fields.tone || "",
-            name: record.fields.name || "",
-            src: record.fields.src?.[0]?.url || "",
-            tags: record.fields.tags || [],
-          });
-        }
-      });
-
-      setSongs(parsedSongs);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoadingSongs(false);
-    }
+  const getSongs = useCallback((albumId: string) => {
+    setCurrentAlbumId(albumId);
   }, []);
 
   const playNext = useCallback(() => {
     if (currentSong && songs.length > 0) {
-      const currentIndex = songs.findIndex(song => song.id === currentSong.id);
+      const currentIndex = songs.findIndex((song) => song.id === currentSong.id);
       const nextIndex = (currentIndex + 1) % songs.length;
       setCurrentSong(songs[nextIndex]);
     }
@@ -63,7 +69,7 @@ export const SongProvider = ({ children }: { children: React.ReactNode }) => {
 
   const playPrevious = useCallback(() => {
     if (currentSong && songs.length > 0) {
-      const currentIndex = songs.findIndex(song => song.id === currentSong.id);
+      const currentIndex = songs.findIndex((song) => song.id === currentSong.id);
       const prevIndex = currentIndex === 0 ? songs.length - 1 : currentIndex - 1;
       setCurrentSong(songs[prevIndex]);
     }

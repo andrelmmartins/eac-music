@@ -1,6 +1,8 @@
 # SpotiCristo
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+App Next.js para ouvir músicas gravadas em ensaios. Desenvolvimento é
+orientado a specs via [GitHub Spec Kit](https://github.com/github/spec-kit):
+princípios em `.specify/memory/constitution.md`.
 
 ## Getting Started
 

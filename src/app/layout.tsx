@@ -3,6 +3,7 @@ import { Urbanist } from "next/font/google";
 import "./globals.css";
 import { AlbumProvider } from "@/contexts/AlbumContext";
 import { SongProvider } from "@/contexts/SongContext";
+import { QueryProvider } from "@/providers/QueryProvider";
 import Sidebar from "@/components/Sidebar";
 
 const font = Urbanist({ subsets: ["latin"] });
@@ -26,19 +27,21 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={font.className}>
-        <AlbumProvider>
-          <SongProvider>
-            <div className="flex min-h-dvh bg-dark-900">
-              <Sidebar />
-              
-              <div className="flex-1 flex flex-col overflow-hidden lg:ml-0 min-h-dvh">
-                <main className="flex-1 overflow-y-auto">
-                  {children}
-                </main>
+        <QueryProvider>
+          <AlbumProvider>
+            <SongProvider>
+              <div className="flex min-h-dvh bg-dark-900">
+                <Sidebar />
+
+                <div className="flex-1 flex flex-col overflow-hidden lg:ml-0 min-h-dvh">
+                  <main className="flex-1 overflow-y-auto">
+                    {children}
+                  </main>
+                </div>
               </div>
-            </div>
-          </SongProvider>
-        </AlbumProvider>
+            </SongProvider>
+          </AlbumProvider>
+        </QueryProvider>
       </body>
     </html>
   );

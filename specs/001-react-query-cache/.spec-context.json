@@ -1,0 +1,108 @@
+{
+  "workflow": "speckit",
+  "specName": "Cache de requisições com React Query",
+  "branch": "new-ui",
+  "currentStep": "implement",
+  "status": "implementing",
+  "history": [
+    {
+      "step": "specify",
+      "substep": null,
+      "kind": "start",
+      "by": "extension",
+      "at": "2026-07-30T11:15:16.741Z"
+    },
+    {
+      "step": "specify",
+      "substep": null,
+      "kind": "complete",
+      "by": "extension",
+      "at": "2026-07-30T11:15:19.174Z"
+    },
+    {
+      "step": "plan",
+      "substep": null,
+      "kind": "start",
+      "by": "extension",
+      "at": "2026-07-30T11:15:19.414Z"
+    },
+    {
+      "step": "plan",
+      "substep": null,
+      "kind": "complete",
+      "by": "extension",
+      "at": "2026-07-30T11:15:19.715Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "kind": "start",
+      "by": "extension",
+      "at": "2026-07-30T11:15:19.983Z"
+    },
+    {
+      "step": "tasks",
+      "substep": null,
+      "kind": "complete",
+      "by": "extension",
+      "at": "2026-07-30T11:15:20.266Z"
+    },
+    {
+      "step": "implement",
+      "substep": null,
+      "kind": "start",
+      "by": "extension",
+      "at": "2026-07-30T11:21:34.788Z"
+    }
+  ],
+  "last_action": "living specs evaluated — skipped (not configured)",
+  "coverage": {
+    "FR-001": {
+      "title": "Obter álbuns e músicas via camada de cache de consultas no cliente"
+    },
+    "FR-002": {
+      "title": "Reutilizar dados em cache fresco sem nova chamada só por remount/navegação"
+    },
+    "FR-003": {
+      "title": "Intervalo de frescor compatível com atualizações semanais"
+    },
+    "FR-004": {
+      "title": "Consultas de músicas isoladas por álbum"
+    },
+    "FR-005": {
+      "title": "Preservar estados de carregamento na primeira carga"
+    },
+    "FR-006": {
+      "title": "Controles de reprodução sem depender de refetch contínuo"
+    },
+    "FR-007": {
+      "title": "Evitar refetch agressivo em foco enquanto cache fresco"
+    },
+    "FR-008": {
+      "title": "Não entrar em loop de retentativas que consuma cota"
+    }
+  },
+  "size": "simple",
+  "classification": {
+    "projectedFiles": 5,
+    "projectedTasks": 6,
+    "scopeSignal": "none",
+    "verdict": "simple"
+  },
+  "context": [
+    "area: src/contexts/AlbumContext.tsx",
+    "area: src/contexts/SongContext.tsx",
+    "area: src/service/records.ts",
+    "constraint: catálogo atualiza só semanalmente",
+    "constraint: usar React Query conforme pedido"
+  ],
+  "intent": "Reduzir consumo da cota gratuita do Airtable cacheando leituras de álbuns e músicas no cliente com React Query, alinhado a atualizações semanais",
+  "expectations": [
+    "Proxy ou cache server-side",
+    "Troca de provedor de dados (sair do Airtable)",
+    "Mutações/escrita no Airtable",
+    "Invalidação manual de cache nesta entrega"
+  ],
+  "approach": "Instalar TanStack Query, provider com frescor ~semanal, migrar AlbumContext e SongContext para useQuery reutilizando getTableRecords",
+  "telemetryInstanceId": "2f828fec-5ec6-4eb0-819d-057da17d0f86"
+}
