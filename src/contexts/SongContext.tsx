@@ -25,14 +25,25 @@ async function fetchSongs(albumId: string): Promise<Song[]> {
     const response = await getTableRecords(albumId);
 
     const parsedSongs: Song[] = [];
-    response.data.records.forEach((record) => {
+    response.records.forEach((record) => {
       if (isSongFields(record.fields)) {
+        const playlistField = record.fields.playlist;
+        const playlists = (Array.isArray(playlistField)
+          ? playlistField
+          : playlistField
+            ? [playlistField]
+            : []
+        )
+          .map((playlist) => playlist.trim())
+          .filter(Boolean);
+
         parsedSongs.push({
           id: record.id || "",
           tone: record.fields.tone || "",
           name: record.fields.name || "",
           src: record.fields.src?.[0]?.url || "",
           tags: record.fields.tags || [],
+          playlists,
         });
       }
     });

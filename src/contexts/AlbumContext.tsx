@@ -18,7 +18,7 @@ async function fetchAlbums(): Promise<Album[]> {
     const response = await getTableRecords(ALBUMS_TABLE_ID);
 
     const parsedAlbums: Album[] = [];
-    response.data.records.forEach((record) => {
+    response.records.forEach((record) => {
       if (isAlbumFields(record.fields)) {
         parsedAlbums.push({
           id: record.fields.id || "",

@@ -4,6 +4,7 @@ export interface Song {
     name: string;
     src: string;
     tags: string[];
+    playlists: string[];
 }
 
 export interface Album {

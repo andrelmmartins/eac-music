@@ -8,6 +8,11 @@
   box-sizing: border-box;
 }
 
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 html {
   background: #121212;
   scroll-behavior: smooth;
@@ -155,4 +160,3 @@ body {
     scrollbar-color: rgba(29, 185, 84, 0.3) rgba(255, 255, 255, 0.05);
   }
 }
-

@@ -27,6 +27,7 @@ export interface SongFields {
   tone: string;
   tags: string[];
   views: number;
+  playlist?: string | string[];
 }
 
 export const isSongFields = (fields: any): fields is SongFields => {
@@ -41,14 +42,26 @@ interface RecordItem {
 
 interface RecordsResponse {
   records: RecordItem[];
+  offset?: string;
 }
 
 export const getTableRecords = async (
   tableId: string,
 ) => {
-  return api.get<RecordsResponse>(`/${BASE}/${tableId}/`, {
-    params: {
-      sort: [{ field: "name", direction: "asc" }],
-    },
-  });
+  const records: RecordItem[] = [];
+  let offset: string | undefined;
+
+  do {
+    const response = await api.get<RecordsResponse>(`/${BASE}/${tableId}/`, {
+      params: {
+        sort: [{ field: "name", direction: "asc" }],
+        ...(offset ? { offset } : {}),
+      },
+    });
+
+    records.push(...response.data.records);
+    offset = response.data.offset;
+  } while (offset);
+
+  return { records };
 };
